@@ -10,11 +10,10 @@ public class Author {
     @SequenceGenerator(name = "author_sequence", sequenceName = "author_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "author_sequence")
     private long id;
-    private String firstName;
-    private String LastName;
-    private String DOB;
+    private String name;
+    private String dob;
     @OneToMany
-    private List<Book> books;
+    //private List<Book> books;
 
     public long getId() {
         return id;
@@ -24,30 +23,22 @@ public class Author {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return LastName;
+    public String getDob() {
+        return dob;
     }
 
-    public void setLastName(String lastName) {
-        LastName = lastName;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
-
-    public String getDOB() {
-        return DOB;
-    }
-
-    public void setDOB(String DOB) {
-        this.DOB = DOB;
-    }
-
+/*
     public List<Book> getBooks() {
         return books;
     }
@@ -55,4 +46,5 @@ public class Author {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+ */
 }

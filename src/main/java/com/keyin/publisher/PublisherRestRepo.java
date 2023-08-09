@@ -5,4 +5,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "publisher", path = "publisher")
 public interface PublisherRestRepo extends JpaRepository<Publisher, Long> {
+    //Publisher findByPublisher(String name);
 }

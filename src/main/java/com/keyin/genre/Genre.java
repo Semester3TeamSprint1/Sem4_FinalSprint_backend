@@ -15,7 +15,7 @@ public class Genre {
     private long id;
     private String type;
     @OneToMany
-    private List<Book> books;
+    //private List<Book> books;
 
     public long getId() {
         return id;
@@ -32,7 +32,7 @@ public class Genre {
     public void setType(String type) {
         this.type = type;
     }
-
+/*
     public List<Book> getBooks() {
         return books;
     }
@@ -40,4 +40,5 @@ public class Genre {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+ */
 }

@@ -12,7 +12,7 @@ public class Publisher {
     private long id;
     private String name;
     @OneToMany
-    private List<Book> books;
+    //private List<Book> books;
 
     public long getId() {
         return id;
@@ -29,7 +29,7 @@ public class Publisher {
     public void setName(String name) {
         this.name = name;
     }
-
+/*
     public List<Book> getBooks() {
         return books;
     }
@@ -37,4 +37,5 @@ public class Publisher {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+ */
 }

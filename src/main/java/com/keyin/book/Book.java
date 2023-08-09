@@ -18,13 +18,13 @@ public class Book {
     private long id;
     private String title;
     private String datePublished;
-    @ManyToMany
+    @OneToMany
     private List<Author> authors;
-    @ManyToMany
+    @OneToMany
     private List<Genre> genres;
-    @ManyToOne
+    @OneToOne
     private Publisher bookPublisher;
-    @ManyToMany
+    @OneToMany
     private List<Publication> publications;
 
     public long getId() {

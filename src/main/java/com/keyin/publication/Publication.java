@@ -11,8 +11,8 @@ public class Publication {
     @GeneratedValue(generator = "publication_sequence")
     private long id;
     private String type;
-    @ManyToMany
-    private List<Book> books;
+    @OneToMany
+    //private List<Book> books;
 
     public long getId() {
         return id;
@@ -29,7 +29,7 @@ public class Publication {
     public void setType(String type) {
         this.type = type;
     }
-
+/*
     public List<Book> getBooks() {
         return books;
     }
@@ -37,4 +37,5 @@ public class Publication {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+ */
 }

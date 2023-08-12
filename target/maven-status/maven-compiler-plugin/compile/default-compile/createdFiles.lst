@@ -1,0 +1,15 @@
+com/keyin/B/author/Author.class
+com/keyin/B/genre/Genre.class
+com/keyin/B/book/BookRepo.class
+com/keyin/B/publisher/PublisherRestRepo.class
+com/keyin/B/book/BookRestRepo.class
+com/keyin/B/author/AuthorRestRepo.class
+com/keyin/B/publication/PublicationRepo.class
+com/keyin/B/book/Book.class
+com/keyin/B/publisher/Publisher.class
+com/keyin/B/publisher/PublisherRepo.class
+com/keyin/B/genre/GenreRestRepo.class
+com/keyin/B/publication/PublicationRestRepo.class
+com/keyin/B/genre/GenreRepo.class
+com/keyin/B/publication/Publication.class
+com/keyin/B/author/AuthorRepo.class

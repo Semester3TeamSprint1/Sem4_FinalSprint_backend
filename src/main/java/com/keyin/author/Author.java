@@ -1,6 +1,6 @@
 package com.keyin.author;
 
-import com.keyin.book.*;
+import com.keyin.book.Book;
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class Author {
     private String name;
     private String dob;
     @OneToMany
-    //private List<Book> books;
+    private List<Book> books;
 
     public long getId() {
         return id;
@@ -38,7 +38,6 @@ public class Author {
     public void setDob(String dob) {
         this.dob = dob;
     }
-/*
     public List<Book> getBooks() {
         return books;
     }
@@ -46,5 +45,6 @@ public class Author {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
- */
 }
+
+

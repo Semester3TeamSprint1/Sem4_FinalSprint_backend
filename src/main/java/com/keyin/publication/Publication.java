@@ -1,6 +1,8 @@
 package com.keyin.publication;
 
 import com.keyin.book.*;
+import com.keyin.book.Book;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class Publication {
     private long id;
     private String type;
     @OneToMany
-    //private List<Book> books;
+    private List<Book> books;
 
     public long getId() {
         return id;
@@ -29,7 +31,7 @@ public class Publication {
     public void setType(String type) {
         this.type = type;
     }
-/*
+
     public List<Book> getBooks() {
         return books;
     }
@@ -37,5 +39,4 @@ public class Publication {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
- */
 }

@@ -1,6 +1,5 @@
 package com.keyin.book;
 
-import com.keyin.book.Book;
 import com.keyin.genre.Genre;
 import com.keyin.publication.Publication;
 import com.keyin.publisher.Publisher;

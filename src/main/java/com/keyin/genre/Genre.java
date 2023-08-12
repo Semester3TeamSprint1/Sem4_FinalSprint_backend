@@ -1,6 +1,9 @@
 package com.keyin.genre;
 
+import com.keyin.author.*;
 import com.keyin.book.*;
+import com.keyin.book.Book;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.Entity;
@@ -15,7 +18,7 @@ public class Genre {
     private long id;
     private String type;
     @OneToMany
-    //private List<Book> books;
+    private List<Book> books;
 
     public long getId() {
         return id;
@@ -32,7 +35,7 @@ public class Genre {
     public void setType(String type) {
         this.type = type;
     }
-/*
+
     public List<Book> getBooks() {
         return books;
     }
@@ -40,5 +43,4 @@ public class Genre {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
- */
 }

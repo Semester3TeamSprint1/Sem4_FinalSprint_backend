@@ -1,9 +1,12 @@
 package com.keyin.book;
 
-import com.keyin.author.*;
-import com.keyin.genre.*;
+import com.keyin.author.Author;
+import com.keyin.genre.Genre;
+import com.keyin.publication.Publication;
+import com.keyin.publisher.Publisher;
 import com.keyin.publisher.*;
 import com.keyin.publication.*;
+
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.Entity;
@@ -18,8 +21,12 @@ public class Book {
     private long id;
     private String title;
     private String datePublished;
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.PERSIST) //Not sure if this is correct.
+    @JoinTable(name = "book_authors",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Author> authors;
+
     @OneToMany
     private List<Genre> genres;
     @OneToOne

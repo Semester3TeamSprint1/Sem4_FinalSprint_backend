@@ -1,4 +1,4 @@
-package com.keyin;
+package com.keyin.library;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.keyin;
+package com.keyin.library;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

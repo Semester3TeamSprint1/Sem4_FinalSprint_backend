@@ -1,4 +1,4 @@
-package com.keyin;
+package com.keyin.library;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ public interface BookService {
     Book getById(Long id);
     List<Book> getByTitle(String title);
     List<Book> getByAuthor(String author);
+    List<Book> findBookByAuthor(String author);
     List<Book> getByGenre(String genre);
     List<Book> getByPublisher(String publisher);
-
     List<Book> getByPublication(String publication);
 
     Book updateBook(Book book);

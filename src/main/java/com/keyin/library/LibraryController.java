@@ -1,7 +1,5 @@
-package com.keyin;
+package com.keyin.library;
 
-import com.keyin.Book.*; // Assuming you have a Book model class
-import com.keyin.BookService; // Assuming you have a BookService class
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +41,11 @@ public class LibraryController {
     @GetMapping("/getByGenre/{genre}")
     public List<Book> getByGenre(@PathVariable String genre) {
         return bookService.getByGenre(genre);
+    }
+
+    @GetMapping("/getByPublication/{publication}")
+    public List<Book> getByPublication(@PathVariable String publication) {
+        return bookService.getByPublication(publication);
     }
 
     @PutMapping("/update/{id}")

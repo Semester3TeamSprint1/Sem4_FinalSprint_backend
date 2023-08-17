@@ -22,6 +22,15 @@ public class Book {
     public Book() {
     }
 
+    public Book(Long id, String title, String author, String genre, String publisher, String publication) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.publisher = publisher;
+        this.publication = publication;
+    }
+
     public Long getId() {
         return id;
     }
@@ -68,5 +77,17 @@ public class Book {
 
     public void setPublication(String publication) {
         this.publication = publication;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", publication='" + publication + '\'' +
+                '}';
     }
 }

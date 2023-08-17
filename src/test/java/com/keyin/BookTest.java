@@ -2,22 +2,36 @@ package com.keyin;
 
 import com.keyin.library.Book;
 import com.keyin.library.BookRepository;
+import com.keyin.library.BookImplementation;
+import com.keyin.library.BookService;
+import com.keyin.library.LibraryController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import java.util.ArrayList;
 
 @SpringBootTest
 public class BookTest {
     @Mock
     private BookRepository bookRepository;
+
+    @InjectMocks
+    private BookImplementation bookService;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
     @Test
     @DisplayName("Test For Finding all Books")
     public void testFindAllBooks(){
@@ -41,9 +55,11 @@ public class BookTest {
         when(bookRepository.findAll()).thenReturn(bookList);
         List<Book> result = bookRepository.findAll();
 
-        Assertions.assertEquals(2,result.size());
-        Assertions.assertEquals(book1,result.get(0));
-        Assertions.assertEquals(book2,result.get(1));
+        System.out.println(result);
+
+        assertEquals(2,result.size());
+        assertEquals(book1,result.get(0));
+        assertEquals(book2,result.get(1));
         Assertions.assertNotEquals(3,result.size());
     }
 //    @Test
@@ -59,6 +75,82 @@ public class BookTest {
 //        List<Book> bookList = Arrays.asList(book1);
 //        when(bookRepository.findByTitle(book1.getTitle())).thenReturn(bookList);
 //        List<Book> result = bookRepository.findByTitle(book1.getTitle());
+@Test
+public void testGetByPublication() {
+    List<Book> mockBooks = new ArrayList<>();
+    mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+    mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+    mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+    mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+    mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+    mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+    mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+    String chosenPublication = "Ebook";
+
+    List<Book> expectedResult = new ArrayList<>();
+    for (Book book : mockBooks) {
+        if (book.getPublication().equalsIgnoreCase(chosenPublication)) {
+            expectedResult.add(book);
+        }
+    }
+
+    when(bookRepository.findByPublication(chosenPublication)).thenReturn(expectedResult);
+
+    List<Book> result = bookService.getByPublication(chosenPublication);
+
+    System.out.println("Expected Result:");
+    for (Book book : expectedResult) {
+        System.out.println(book.getId() + " " + book.getTitle());
+    }
+
+    System.out.println("Actual Result:");
+    for (Book book : result) {
+        System.out.println(book.getId() + " " + book.getTitle());
+    }
+
+    // Check to see if expected result equals actual result.
+    assertEquals(expectedResult, result);
+    verify(bookRepository, times(1)).findByPublication(chosenPublication);
+}
+    @Test
+    public void testGetByPublicationWithNoMatch() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String chosenPublication = "Audiobook";
+
+        List<Book> expectedResult = new ArrayList<>();
+
+
+        List<Book> result = bookService.getByPublication(chosenPublication);
+
+        for (Book book : mockBooks) {
+            if (book.getPublication().equalsIgnoreCase(chosenPublication)) {
+                result.add(book);
+            }
+        }
+
+        System.out.println("Expected Result (Empty List):");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        // Check for to make sure both the expected result and the actual result has no entries.
+        assertTrue(expectedResult.size() == 0 && result.size() == 0);
+        verify(bookRepository, times(1)).findByPublication(chosenPublication);
+    }
 
 
 }

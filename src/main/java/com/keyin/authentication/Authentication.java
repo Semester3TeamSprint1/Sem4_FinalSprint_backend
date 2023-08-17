@@ -14,7 +14,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
-
+/*
 @Configuration
 @EnableWebSecurity
 public class Authentication {
@@ -67,3 +67,5 @@ public class Authentication {
         return users;
     }
 }
+
+ */

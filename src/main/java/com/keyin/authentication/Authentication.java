@@ -14,7 +14,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
-/*
+
 @Configuration
 @EnableWebSecurity
 public class Authentication {
@@ -43,13 +43,13 @@ public class Authentication {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-                .username("username")
-                .password(passwordEncoder().encode("password"))
+                .username("username1")
+                .password(passwordEncoder().encode("password1"))
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
+                .username("admin1")
+                .password(passwordEncoder().encode("admin1"))
                 .roles("USER", "ADMIN")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
@@ -68,4 +68,4 @@ public class Authentication {
     }
 }
 
- */
+

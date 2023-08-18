@@ -73,7 +73,7 @@ public void testGetByPublication() {
     mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
     mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
 
-    String chosenPublication = "Ebook";
+    String chosenPublication = "Book";
 
     List<Book> expectedResult = new ArrayList<>();
     for (Book book : mockBooks) {
@@ -97,6 +97,9 @@ public void testGetByPublication() {
     }
 
     // Check to see if expected result equals actual result.
+    if (expectedResult.isEmpty()) {
+        fail("Chosen publication not found in the list.");
+    }
     assertEquals(expectedResult, result);
     verify(bookRepository, times(1)).findByPublication(chosenPublication);
 }
@@ -149,7 +152,7 @@ public void testGetByPublication() {
         mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
         mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
 
-        String chosenAuthor = "Stephanie Meyer";
+        String chosenAuthor = "F. Scott Fitzgerald";
 
         List<Book> expectedResult = new ArrayList<>();
         for (Book book : mockBooks) {
@@ -173,7 +176,9 @@ public void testGetByPublication() {
         for (Book book : result) {
             System.out.println(book.getId() + " " + book.getTitle());
         }
-
+        if (expectedResult.isEmpty()) {
+            fail("Chosen author not found in the list.");
+        }
         // Check to see if expected result equals actual result.
         assertEquals(expectedResult, result);
         verify(bookRepository, times(1)).findByAuthor(chosenAuthor);

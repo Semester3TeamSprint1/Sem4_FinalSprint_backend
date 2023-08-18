@@ -113,7 +113,13 @@ public List<Book> getByTitle(String title) {
         Query query = new QueryParser("title", analyzer).parse(title + "~1");
         DirectoryReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopDocs docs = searcher.search(query, books.size());
+        int numHits;
+        if (books.size() < 1){
+            numHits = 1;
+        } else {
+            numHits = books.size();
+        }
+        TopDocs docs = searcher.search(query, numHits);
 
         for (ScoreDoc scoreDoc : docs.scoreDocs) {
             Document doc = searcher.doc(scoreDoc.doc);
@@ -143,6 +149,7 @@ public List<Book> getByTitle(String title) {
             return null;
         }
     }
+
 
 
 
@@ -198,6 +205,9 @@ public List<Book> getByTitle(String title) {
         // Implement the logic to find and return a list of Book objects based on author name
         // You can replace this with your actual implementation or call the appropriate repository method.
         return bookRepository.findByAuthor(author);
+    }
+    public List<Book> findBooksByTitle(String title){
+        return bookRepository.findByTitle(title);
     }
 
     @Override

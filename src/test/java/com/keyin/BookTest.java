@@ -63,6 +63,7 @@ public class BookTest {
         Assertions.assertNotEquals(3,result.size());
     }
 @Test
+@DisplayName("Testing Get By Publication")
 public void testGetByPublication() {
     List<Book> mockBooks = new ArrayList<>();
     mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
@@ -73,7 +74,7 @@ public void testGetByPublication() {
     mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
     mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
 
-    String chosenPublication = "Book";
+    String chosenPublication = "EBook";
 
     List<Book> expectedResult = new ArrayList<>();
     for (Book book : mockBooks) {
@@ -104,6 +105,7 @@ public void testGetByPublication() {
     verify(bookRepository, times(1)).findByPublication(chosenPublication);
 }
     @Test
+    @DisplayName("Testing Get By Publication With No Match")
     public void testGetByPublicationWithNoMatch() {
         List<Book> mockBooks = new ArrayList<>();
         mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
@@ -142,6 +144,7 @@ public void testGetByPublication() {
         verify(bookRepository, times(1)).findByPublication(chosenPublication);
     }
     @Test
+    @DisplayName("Testing Get By Author")
     public void testGetByAuthor() {
         List<Book> mockBooks = new ArrayList<>();
         mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
@@ -182,6 +185,296 @@ public void testGetByPublication() {
         // Check to see if expected result equals actual result.
         assertEquals(expectedResult, result);
         verify(bookRepository, times(1)).findByAuthor(chosenAuthor);
+    }
+    @Test
+    @DisplayName("Testing Get By Author With No Match")
+    public void testGetByAuthorWithNoMatch() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String chosenAuthor = "Denis Wide";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getAuthor().equalsIgnoreCase(chosenAuthor)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByAuthor(chosenAuthor)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.findBookByAuthor(chosenAuthor);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        // Check for to make sure both the expected result and the actual result has no entries.
+        assertTrue(expectedResult.size() == 0 && result.size() == 0);
+        verify(bookRepository, times(1)).findByAuthor(chosenAuthor);
+    }
+
+    @Test
+    @DisplayName("Testing Get By Publisher")
+    public void testGetByPublisher() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "Little, Brown and Company";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getPublisher().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByPublisher(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.getByPublisher(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        if (expectedResult.isEmpty()) {
+            fail("Chosen publisher not found in the list.");
+        }
+        // Check to see if expected result equals actual result.
+        assertEquals(expectedResult, result);
+        verify(bookRepository, times(1)).findByPublisher(testString);
+    }
+    @Test
+    @DisplayName("Testing Get By Publisher With No Match")
+    public void testGetByPublisherWithNoMatch() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "Atlantic";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getPublisher().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByPublisher(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.getByPublisher(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        // Check for to make sure both the expected result and the actual result has no entries.
+        assertTrue(expectedResult.size() == 0 && result.size() == 0);
+        verify(bookRepository, times(1)).findByPublisher(testString);
+    }
+    @Test
+    @DisplayName("Testing Get By Genre")
+    public void testGetByGenre() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "Classic";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getGenre().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByGenre(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.getByGenre(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        if (expectedResult.isEmpty()) {
+            fail("Chosen genre not found in the list.");
+        }
+        // Check to see if expected result equals actual result.
+        assertEquals(expectedResult, result);
+        verify(bookRepository, times(1)).findByGenre(testString);
+    }
+    @Test
+    @DisplayName("Testing Get By Genre With No Match")
+    public void testGetByGenreWithNoMatch() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "esk";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getGenre().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByGenre(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.getByGenre(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        // Check for to make sure both the expected result and the actual result has no entries.
+        assertTrue(expectedResult.size() == 0 && result.size() == 0);
+        verify(bookRepository, times(1)).findByGenre(testString);
+    }
+    @Test
+    @DisplayName("Testing Get By Title")
+    public void testGetByTitle() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "Harry Potter and the Sorcerer's Stone";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getTitle().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByTitle(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.findBooksByTitle(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        if (expectedResult.isEmpty()) {
+            fail("Chosen genre not found in the list.");
+        }
+        // Check to see if expected result equals actual result.
+        assertEquals(expectedResult, result);
+        verify(bookRepository, times(1)).findByTitle(testString);
+    }
+    @Test
+    @DisplayName("Testing Get By Title With No Match")
+    public void testGetByTitleWithNoMatch() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
+
+        String testString = "Harry Potters";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getTitle().equalsIgnoreCase(testString)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByTitle(testString)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.findBooksByTitle(testString);
+
+        System.out.println(result);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+        // Check for to make sure both the expected result and the actual result has no entries.
+        assertTrue(expectedResult.size() == 0 && result.size() == 0);
+        verify(bookRepository, times(1)).findByTitle(testString);
     }
     @Test
     @DisplayName("Testing Delete By id")

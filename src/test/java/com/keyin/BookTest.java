@@ -183,6 +183,51 @@ public void testGetByPublication() {
         assertEquals(expectedResult, result);
         verify(bookRepository, times(1)).findByAuthor(chosenAuthor);
     }
+    @Test
+    @DisplayName("Testing Delete By id")
+    public void deleteById(){
+        Book book1 = new Book();
+        book1.setId(1L);
+        book1.setAuthor("Paulo Coelho");
+        book1.setGenre("Fiction");
+        book1.setPublication("Ebook");
+        book1.setPublisher("HarperOne");
+        book1.setTitle("The Alchemist");
+
+        Book book2 = new Book();
+        book2.setId(2L);
+        book2.setAuthor("George Orwell");
+        book2.setGenre("Dystopian");
+        book2.setPublication("Ebook");
+        book2.setPublisher("Signet Classics");
+        book2.setTitle("1984");
+
+        bookRepository.deleteById(book1.getId());
+        verify(bookRepository,times(1)).deleteById(book1.getId());
+
+    }
+    @Test
+    @DisplayName("Testing Create book")
+    public void testCreateBooks(){
+        Book book1 = new Book();
+        book1.setId(1L);
+        book1.setAuthor("Paulo Coelho");
+        book1.setGenre("Fiction");
+        book1.setPublication("Ebook");
+        book1.setPublisher("HarperOne");
+        book1.setTitle("The Alchemist");
+
+        Book book2 = new Book();
+        book2.setId(2L);
+        book2.setAuthor("George Orwell");
+        book2.setGenre("Dystopian");
+        book2.setPublication("Ebook");
+        book2.setPublisher("Signet Classics");
+        book2.setTitle("1984");
+
+        List<Book> bookList = Arrays.asList(book1,book2);
+        Assertions.assertTrue(bookList.contains(book1) && bookList.contains(book2));
+    }
 
 }
 

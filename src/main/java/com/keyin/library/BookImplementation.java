@@ -170,7 +170,13 @@ public List<Book> getByTitle(String title) {
             Query query = new QueryParser("author", analyzer).parse(author + "~1");
             DirectoryReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
-            TopDocs docs = searcher.search(query, books.size());
+            int numHits;
+            if (books.size() < 1){
+                numHits = 1;
+            } else {
+                numHits = books.size();
+            }
+            TopDocs docs = searcher.search(query, numHits);
 
             for (ScoreDoc scoreDoc : docs.scoreDocs) {
                 Document doc = searcher.doc(scoreDoc.doc);

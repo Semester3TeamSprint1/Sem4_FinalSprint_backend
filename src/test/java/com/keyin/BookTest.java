@@ -160,7 +160,9 @@ public void testGetByPublication() {
 
         when(bookRepository.findByAuthor(chosenAuthor)).thenReturn(expectedResult);
 
-        List<Book> result = bookService.getByAuthor(chosenAuthor);
+        List<Book> result = bookService.findBookByAuthor(chosenAuthor);
+
+        System.out.println(result);
 
         System.out.println("Expected Result:");
         for (Book book : expectedResult) {

@@ -62,19 +62,6 @@ public class BookTest {
         assertEquals(book2,result.get(1));
         Assertions.assertNotEquals(3,result.size());
     }
-//    @Test
-//    @DisplayName("Test For Finding Books By id")
-//    public void testFindByID(){
-//        Book book1 = new Book();
-//        book1.setId(1L);
-//        book1.setAuthor("Paulo Coelho");
-//        book1.setGenre("Fiction");
-//        book1.setPublication("Ebook");
-//        book1.setPublisher("HarperOne");
-//        book1.setTitle("The Alchemist");
-//        List<Book> bookList = Arrays.asList(book1);
-//        when(bookRepository.findByTitle(book1.getTitle())).thenReturn(bookList);
-//        List<Book> result = bookRepository.findByTitle(book1.getTitle());
 @Test
 public void testGetByPublication() {
     List<Book> mockBooks = new ArrayList<>();
@@ -151,7 +138,44 @@ public void testGetByPublication() {
         assertTrue(expectedResult.size() == 0 && result.size() == 0);
         verify(bookRepository, times(1)).findByPublication(chosenPublication);
     }
+    @Test
+    public void testGetByAuthor() {
+        List<Book> mockBooks = new ArrayList<>();
+        mockBooks.add(new Book(1L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Paperback"));
+        mockBooks.add(new Book(2L, "Twilight", "Stephanie Meyer", "Young Adult", "Little, Brown and Company", "Ebook"));
+        mockBooks.add(new Book(3L, "To Kill a Mockingbird", "Harper Lee", "Fiction", "HarperCollins", "Paperback"));
+        mockBooks.add(new Book(4L, "1984", "George Orwell", "Dystopian", "Penguin Books", "Hardcover"));
+        mockBooks.add(new Book(5L, "Pride and Prejudice", "Jane Austen", "Classic", "Vintage Books", "Paperback"));
+        mockBooks.add(new Book(6L, "The Great Gatsby", "F. Scott Fitzgerald", "Literary Fiction", "Scribner", "Ebook"));
+        mockBooks.add(new Book(7L, "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "Scholastic", "Hardcover"));
 
+        String chosenAuthor = "Stephanie Meyer";
+
+        List<Book> expectedResult = new ArrayList<>();
+        for (Book book : mockBooks) {
+            if (book.getAuthor().equalsIgnoreCase(chosenAuthor)) {
+                expectedResult.add(book);
+            }
+        }
+
+        when(bookRepository.findByAuthor(chosenAuthor)).thenReturn(expectedResult);
+
+        List<Book> result = bookService.getByAuthor(chosenAuthor);
+
+        System.out.println("Expected Result:");
+        for (Book book : expectedResult) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        System.out.println("Actual Result:");
+        for (Book book : result) {
+            System.out.println(book.getId() + " " + book.getTitle());
+        }
+
+        // Check to see if expected result equals actual result.
+        assertEquals(expectedResult, result);
+        verify(bookRepository, times(1)).findByAuthor(chosenAuthor);
+    }
 
 }
 

@@ -7,6 +7,7 @@ public interface BookService {
     List<Book> getAllBooks();
     Book getById(Long id);
     List<Book> getByTitle(String title);
+    List<Book> findBooksByTitle(String title);
     List<Book> getByAuthor(String author);
     List<Book> findBookByAuthor(String author);
     List<Book> getByGenre(String genre);

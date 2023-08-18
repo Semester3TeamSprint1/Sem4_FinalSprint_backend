@@ -43,13 +43,13 @@ public class Authentication {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-                .username("username10")
-                .password(passwordEncoder().encode("password10"))
+                .username("username1")
+                .password(passwordEncoder().encode("password1"))
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
-                .username("admin10")
-                .password(passwordEncoder().encode("admin10"))
+                .username("admin1")
+                .password(passwordEncoder().encode("admin1"))
                 .roles("USER", "ADMIN")
                 .build();
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
